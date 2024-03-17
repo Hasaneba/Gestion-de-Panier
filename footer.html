@@ -1,0 +1,564 @@
+<!-- commande.html -->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmation de commande</title>
+    
+    <link  rel="stylesheet" href="footer.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+
+<!-- Votre formulaire de commande et autres éléments ici -->
+
+<!-- Section pour afficher les détails des produits supprimés -->
+
+<div class="navbar" id="myNavbar"> 
+    <span class="site-name"><i class="fas fa-shopping-basket"></i>Gestion Panier</span>
+    <a href="acceuil.html"> 
+        <i class="fas fa-home icon"></i>Home 
+    </a> 
+    <a href="footer.html"> 
+        <i class="fas fa-briefcase icon"></i>Panier
+    </a> 
+    <a href="GestionProduit.html"> 
+        <i class="fas fa-boxes"></i>Produit 
+    </a> 
+    <a href="Test.html"> 
+        <i class="fas fa-shopping-cart"></i>Commande
+    </a> 
+
+    <a href="login.html" id="logoutLink"> 
+        <i class="fas fa-sign-in-alt"></i>Deconnection
+    </a> 
+    
+    
+    <a href="javascript:void(0);" class="icon"
+        onclick="myFunc()"> 
+        <i class="fas fa-bars"></i> 
+    </a> 
+</div> 
+<button id="validateOrderBtn">ValideCommande</button>
+<button id="clearCart">Vider le Panier</button>
+<input type="text" id="searchInput"  oninput="filterCart()" placeholder="Rechercher dans le panier...">
+<table id="cartItems">
+    <thead>
+        <tr>
+            <th>NomProduit</th>
+            <th>Description</th>
+            <th>image</th>
+            <th>Prix</th>
+            
+            <th>Quantite</th>
+            <th>PrixTotal</th>
+            <th colspan="2">Action</th>
+
+        </tr>
+    </thead>
+    <tbody>
+
+      
+        <!-- Les lignes du panier seront générées ici -->
+    </tbody>
+    
+ 
+  
+</table>
+
+<div id="pagination"></div>
+<!-- Vos autres éléments ici -->
+
+<script>
+// Récupérer les informations des produits supprimés depuis le localStorage
+
+
+function showCart() {
+    var cartItems = JSON.parse(localStorage.getItem('panierList')) || [];
+    var tbody = document.querySelector('#cartItems tbody');
+    tbody.innerHTML = ''; // Effacer le contenu de la table
+
+    cartItems.forEach(function(item, index) {
+        if (item !== null) { // Vérifiez si l'élément n'est pas null
+            var row = document.createElement('tr');
+
+            // Créer et ajouter les cellules pour chaque propriété
+            var descriptionCell = document.createElement('td');
+            descriptionCell.textContent = item.Description || "N/A";
+            row.appendChild(descriptionCell);
+
+            var nomProduitCell = document.createElement('td');
+            nomProduitCell.textContent = item.nomProduit || "N/A";
+            row.appendChild(nomProduitCell);
+
+            var prixCell = document.createElement('td');
+            prixCell.textContent = item.Prix || "N/A";
+            row.appendChild(prixCell);
+
+
+            var prixCell = document.createElement('td');
+            prixCell.textContent = item.quantity || "N/A";
+            row.appendChild(prixCell);
+
+            var quantityCell = document.createElement('td');
+            var quantityInput = document.createElement('input');
+            quantityInput.type = "number";
+            quantityInput.className = "quantity-input";
+            quantityInput.value = item.quantity || 1;
+            quantityCell.appendChild(quantityInput);
+            row.appendChild(quantityCell);
+
+            //Button Ajouter
+
+            var actionsCell = document.createElement('td');
+            var saveButton = document.createElement('button');
+            saveButton.textContent = "Enregistrer";
+            saveButton.onclick = function() {
+                item.quantity = quantityInput.value;
+                localStorage.setItem('panierList', JSON.stringify(cartItems));
+                showCart();
+            };
+            actionsCell.appendChild(saveButton);
+            row.appendChild(actionsCell);
+
+            tbody.appendChild(row)
+
+
+
+
+            // Bouton "+" pour incrémenter la quantité
+            var incrementButton = document.createElement('button');
+            incrementButton.textContent = "+";
+            incrementButton.className = "incrementButton";
+            incrementButton.onclick = function() {
+                quantityInput.value++;
+            };
+            quantityCell.appendChild(incrementButton);
+
+            // Bouton "-" pour décrémenter la quantité
+            var decrementButton = document.createElement('button');
+            decrementButton.className = "decrementButton";
+            decrementButton.textContent = "-";
+            decrementButton.onclick = function() {
+                if (quantityInput.value > 1) {
+                    quantityInput.value--;
+                }
+            };
+            quantityCell.appendChild(decrementButton);
+
+            row.appendChild(quantityCell);
+
+            // Prix total 
+            var totalPriceCell = document.createElement('td');
+            totalPriceCell.textContent = (parseFloat(item.Prix) * parseFloat(item.quantity)).toFixed(2); // Calcul du prix total avec 2 décimales
+            row.appendChild(totalPriceCell);
+
+            tbody.appendChild(row);
+
+            // Bouton de validation de commande
+            // Button de suppression
+var deleteIcon = document.createElement('i');
+deleteIcon.className = "fas fa-trash-alt"; // Ajoutez la classe FontAwesome correspondant à l'icône de suppression
+deleteIcon.style.color = "blue"; // Ajoutez la couleur de l'icône
+deleteIcon.style.fontSize = "24px"; // Ajoutez la taille de l'icône
+deleteIcon.style.cursor = "pointer"; // Ajouter un curseur de pointeur pour indiquer que l'icône est cliquable
+
+// Gérer l'événement de clic sur l'icône de suppression
+deleteIcon.onclick = function() {
+    // Supprimer le produit du panier
+    cartItems.splice(index, 1);
+    localStorage.setItem('panierList', JSON.stringify(cartItems));
+    // Mettre à jour l'affichage du panier et le prix total
+    showCart();
+};
+
+// Cellule pour le bouton de suppression
+var deleteCell = document.createElement('td');
+deleteCell.appendChild(deleteIcon); // Ajout de l'icône de suppression dans la cellule
+row.appendChild(deleteCell); // Ajout de la cellule à la ligne
+
+// Ajout de la ligne à la table
+tbody.appendChild(row);
+
+
+
+
+
+
+            // Mettre à jour le prix total après chaque modification de la quantité
+            quantityInput.addEventListener('change', function() {
+                item.quantity = quantityInput.value;
+                localStorage.setItem('panierList', JSON.stringify(cartItems));
+                showCart();
+            });
+
+
+            // image 
+            if (item.hasOwnProperty('image')) {
+                var imageCell = document.createElement('td');
+                var img = document.createElement('img');
+                img.src = item.image;
+                img.alt = "Image du produit";
+                img.width = 60;
+                imageCell.appendChild(img);
+                row.appendChild(imageCell);
+            }
+
+            tbody.appendChild(row);
+
+
+
+            // select 
+            var selectCell = document.createElement('td');
+        var selectCheckbox = document.createElement('input');
+        selectCheckbox.type = "checkbox";
+        selectCheckbox.id = "selectCheckbox" + index;
+        selectCheckbox.className = "selectCheckbox";
+        selectCell.appendChild(selectCheckbox);
+        row.appendChild(selectCell);
+
+        tbody.appendChild(row);
+
+
+            // fin
+
+            //
+        }
+    });
+
+    // Calculer et afficher le prix total
+
+
+    var totalPrice = cartItems.reduce(function(acc, item) {
+        return acc + parseFloat(item.Prix) * parseFloat(item.quantity);
+    }, 0);
+    var existingTotalElement = document.getElementById('totalPriceElement');
+    if (!existingTotalElement) {
+        // Si l'élément avec l'ID 'totalPriceElement' n'existe pas encore, créez-le
+        var prixTotalElement = document.createElement('div');
+        prixTotalElement.id = 'totalPriceElement'; // Ajoutez un ID pour identifier cet élément
+        prixTotalElement.textContent = "Somme totale des prix : " + totalPrice.toFixed(2);
+        // Insérer l'élément pour afficher le prix total avant le tableau
+        document.body.insertBefore(prixTotalElement, document.getElementById('cartItems').previousSibling);
+    } else {
+        // Si l'élément existe déjà, mettez à jour son contenu avec le nouveau prix total
+        existingTotalElement.textContent = "Somme totale des prix : " + totalPrice.toFixed(2);
+    }
+}
+
+showCart(); // Appel 
+
+
+    
+showCart(); // Appel initial pour afficher le panier au chargement de la page
+
+
+
+
+
+
+
+
+
+
+
+// dernier 
+
+// Gestion de l'événement de clic sur le bouton "Valider la Commande"
+// Gestion de l'événement de clic sur le bouton "Valider la Commande"
+// Gestionnaire d'événements pour le bouton "Valider la commande"
+
+
+    // Gestionnaire d'événements pour le bouton "Valider la commande"
+   
+
+
+    document.getElementById('validateOrderBtn').addEventListener('click', function() {
+    var selectedProducts = document.querySelectorAll('input[type="checkbox"]:checked');
+    if (selectedProducts.length === 0) {
+        alert("Veuillez sélectionner au moins un produit avant de valider la commande.");
+    } else {
+        // Récupérer les informations des produits sélectionnés
+        var cartItems = JSON.parse(localStorage.getItem('panierList')) || [];
+        var orderedProducts = [];
+        var productsToRemove = []; // Nouveau tableau pour stocker les produits à supprimer du panier
+
+        selectedProducts.forEach(function(checkbox) {
+            var index = parseInt(checkbox.id.replace('selectCheckbox', ''));
+            orderedProducts.push(cartItems[index]);
+            productsToRemove.push(index); // Ajouter l'index du produit à supprimer
+        });
+
+        // Supprimer les produits sélectionnés du panier
+        productsToRemove.sort(function(a, b) {
+            return b - a; // Tri décroissant pour supprimer les éléments du tableau sans altérer l'index
+        }).forEach(function(index) {
+            cartItems.splice(index, 1);
+        });
+
+        // Stocker les informations des produits commandés dans le localStorage
+        localStorage.setItem('orderedProducts', JSON.stringify(orderedProducts));
+        // Mettre à jour le panier dans le localStorage
+        localStorage.setItem('panierList', JSON.stringify(cartItems));
+        // Rediriger vers la page de commande
+        window.location.href = 'Test.html';
+    }
+});
+
+
+
+
+// vider le panier 
+// Gestion du clic sur le bouton de suppression du panier
+var clearCartButton = document.getElementById('clearCart');
+clearCartButton.addEventListener('click', function() {
+    // Supprimer le contenu du panier en vidant le stockage local
+    localStorage.removeItem('panierList');
+    // Mettre à jour l'affichage du panier
+    showCart();
+});
+
+
+
+
+
+
+//barre de recherche 
+
+
+// Déclaration des variables pour la pagination
+
+
+function showCart(page = 1, itemsPerPage = 5, searchTerm = '') {
+    var cartItems = JSON.parse(localStorage.getItem('panierList')) || [];
+
+    // Filtrer les articles en fonction du terme de recherche
+    var filteredItems = cartItems.filter(item => {
+        return item.Description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+               item.nomProduit.toLowerCase().includes(searchTerm.toLowerCase()) ||
+               item.Prix.toString().includes(searchTerm.toLowerCase()) ||
+               item.quantity.toString().includes(searchTerm.toLowerCase());
+    });
+
+    // Calculer les valeurs de pagination
+    var startIndex = (page - 1) * itemsPerPage;
+    var endIndex = startIndex + itemsPerPage;
+    var paginatedItems = filteredItems.slice(startIndex, endIndex);
+
+    var tbody = document.querySelector('#cartItems tbody');
+    tbody.innerHTML = ''; // Effacer le contenu de la table
+
+    paginatedItems.forEach(function(item, index) {
+        // Créer une ligne pour chaque article
+        var row = document.createElement('tr');
+
+        // Ajouter les cellules pour chaque propriété de l'article
+        var descriptionCell = document.createElement('td');
+        descriptionCell.textContent = item.Description || "N/A";
+        row.appendChild(descriptionCell);
+
+        var nomProduitCell = document.createElement('td');
+        nomProduitCell.textContent = item.nomProduit || "N/A";
+        row.appendChild(nomProduitCell);
+        // select 
+       
+
+        tbody.appendChild(row);
+
+
+         // image 
+         if (item.hasOwnProperty('image')) {
+                var imageCell = document.createElement('td');
+                var img = document.createElement('img');
+                img.src = item.image;
+                img.alt = "Image du produit";
+                img.width = 60;
+                imageCell.appendChild(img);
+                row.appendChild(imageCell);
+            }
+
+            tbody.appendChild(row);
+
+        var prixCell = document.createElement('td');
+        prixCell.textContent = item.Prix || "N/A";
+        row.appendChild(prixCell);
+
+
+
+        var quantityCell = document.createElement('td');
+            var quantityInput = document.createElement('input');
+            quantityInput.type = "number";
+            quantityInput.className = "quantity-input";
+            quantityInput.value = item.quantity || 1;
+            quantityCell.appendChild(quantityInput);
+            row.appendChild(quantityCell);
+
+            //Button Ajouter
+
+          
+            // Mettre à jour le prix total après chaque modification de la quantité
+        quantityInput.addEventListener('change', function() {
+                item.quantity = quantityInput.value;
+                localStorage.setItem('panierList', JSON.stringify(cartItems));
+                showCart();
+            });
+
+     
+
+       
+
+       
+
+          // Prix total 
+          var totalPriceCell = document.createElement('td');
+            totalPriceCell.textContent = (parseFloat(item.Prix) * parseFloat(item.quantity)).toFixed(2); // Calcul du prix total avec 2 décimales
+            row.appendChild(totalPriceCell);
+
+            tbody.appendChild(row);
+
+            
+
+
+
+        var selectCell = document.createElement('td');
+        var selectCheckbox = document.createElement('input');
+        selectCheckbox.type = "checkbox";
+        selectCheckbox.id = "selectCheckbox" + index;
+        selectCheckbox.className = "selectCheckbox";
+        selectCell.appendChild(selectCheckbox);
+        row.appendChild(selectCell);
+
+
+
+        // Button de suppression
+var deleteIcon = document.createElement('i');
+deleteIcon.className = "fas fa-trash-alt"; // Ajoutez la classe FontAwesome correspondant à l'icône de suppression
+deleteIcon.style.color = "blue"; // Ajoutez la couleur de l'icône
+deleteIcon.style.fontSize = "24px"; // Ajoutez la taille de l'icône
+deleteIcon.style.cursor = "pointer"; // Ajouter un curseur de pointeur pour indiquer que l'icône est cliquable
+
+// Gérer l'événement de clic sur l'icône de suppression
+deleteIcon.onclick = function() {
+    // Supprimer le produit du panier
+    cartItems.splice(index, 1);
+    localStorage.setItem('panierList', JSON.stringify(cartItems));
+    // Mettre à jour l'affichage du panier et le prix total
+    showCart();
+};
+
+// Cellule pour le bouton de suppression
+var deleteCell = document.createElement('td');
+deleteCell.appendChild(deleteIcon); // Ajout de l'icône de suppression dans la cellule
+row.appendChild(deleteCell); 
+
+
+
+// prix total 
+
+
+
+
+
+
+
+
+
+
+
+
+           
+
+           
+
+             
+
+        // Ajouter la ligne à la table
+        tbody.appendChild(row);
+    });
+   
+    var totalPrice = cartItems.reduce(function(acc, item) {
+    return acc + parseFloat(item.Prix) * parseFloat(item.quantity);
+    }, 0);
+    var existingTotalElement = document.getElementById('totalPriceElement');
+    if (!existingTotalElement) {
+        // Si l'élément avec l'ID 'totalPriceElement' n'existe pas encore, créez-le
+        var prixTotalElement = document.createElement('div');
+        prixTotalElement.style.marginLeft="645px";
+        prixTotalElement.style.marginBottom="-165px";
+        prixTotalElement.style.marginTop="100px";
+       // prixTotalElement.style.marginBottom="500px";
+        prixTotalElement.id = 'totalPriceElement'; // Ajoutez un ID pour identifier cet élément
+        prixTotalElement.textContent = "Somme totale des prix : " + totalPrice.toFixed(2);
+        // Insérer l'élément pour afficher le prix total avant le tableau
+       document.body.insertBefore(prixTotalElement, document.getElementById('cartItems').previousSibling);
+    } else {
+        // Si l'élément existe déjà, mettez à jour son contenu avec le nouveau prix total
+        existingTotalElement.textContent = "Somme totale des prix : " + totalPrice.toFixed(2);
+    }
+
+
+
+
+
+
+
+
+    // Mettre à jour la pagination
+    var pagination = document.getElementById('pagination');
+    var pageCount = Math.ceil(filteredItems.length / itemsPerPage);
+    pagination.innerHTML = "";
+    for (let i = 1; i <= pageCount; i++) {
+        var li = document.createElement('li');
+        var a = document.createElement('a');
+        a.href = "#";
+        a.textContent = i;
+        if (i === page) {
+            li.classList.add('active');
+        }
+        a.addEventListener('click', function() {
+            showCart(i, itemsPerPage, searchTerm);
+        });
+        li.appendChild(a);
+        pagination.appendChild(li);
+    }
+
+    var previousLink = document.createElement("a");
+previousLink.href = "#";
+previousLink.innerHTML = "&laquo;";
+pagination.insertBefore(previousLink, pagination.firstChild);
+
+// Ajout de l'élément 'a' avec le contenu '»' pour la pagination suivante
+var nextLink = document.createElement("a");
+nextLink.href = "#";
+nextLink.innerHTML = "&raquo;";
+pagination.appendChild(nextLink);
+}
+
+// Gestion de la recherche/filter
+function filterCart() {
+    var searchTerm = document.getElementById('searchInput').value;
+    showCart(1, 5, searchTerm);
+}
+
+// Chargement initial des données
+window.onload = function() {
+    showCart();
+}
+
+
+
+ // prix total 
+
+
+showCart(); // Appel
+
+
+
+</script>
+<footer class="footer">
+    <!-- Pied de page -->
+    <p>&copy; 2024 - Mon Site Web</p>
+</footer>
+</body>
+</html>

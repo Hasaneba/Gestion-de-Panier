@@ -1,0 +1,1041 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="Test.css">
+<link rel="stylesheet" href= "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"> 
+
+</head>
+<body>
+<div class="navbar" id="myNavbar"> 
+    <span class="site-name"><i class="fas fa-shopping-basket"></i>Gestion Panier</span>
+    <a href="acceuil.html"> 
+        <i class="fas fa-home icon"></i>Home 
+    </a> 
+    <a href="footer.html"> 
+        <i class="fas fa-briefcase icon"></i>Panier
+    </a> 
+    <a href="GestionProduit.html"> 
+        <i class="fas fa-boxes"></i>Produit 
+    </a> 
+    <a href="Test.html"> 
+        <i class="fas fa-shopping-cart"></i>Commande
+    </a> 
+
+    <a href="login.html" id="logoutLink"> 
+        <i class="fas fa-sign-in-alt"></i>Deconnection
+    </a> 
+    
+    
+    <a href="javascript:void(0);" class="icon"
+        onclick="myFunc()"> 
+        <i class="fas fa-bars"></i> 
+    </a> 
+</div> 
+
+<h1 id="prod">Produit Achetés</h1>
+<input type="text" id="searchInput" placeholder="Rechercher...">
+<table id="commandTable">
+    <thead>
+        <tr>
+            <th>NomProduit</th>
+            <th>PrixProduit</th>
+            <th>Quantité</th>
+            <th>ImageProduit</th>
+            <th>NomClient</th>
+            <th>PrixTotal</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Les données des produits sélectionnés seront ajoutées ici -->
+    </tbody>
+</table>
+<div id="pagination1"></div>
+
+
+<input type="text" id="myInput" placeholder="Rechercher...">
+<h1 id="commande">Commande</h1>
+<table id="Table">
+    <thead>
+        <tr>
+            <th>NomClient</th>
+            <th>PrenomClient</th>
+            <th>CodePostal</th>
+            <th>Ville</th>
+            <th>Email</th>
+            <th>Telephone</th>
+            <th>Paiement</th>
+            <th colspan="2">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Les données des produits sélectionnés seront ajoutées ici -->
+    </tbody>
+</table>
+<div id="pagination">
+    <!-- Pagination -->
+</div>
+
+<div class="container">
+<form id="orderForm">
+    <label for="nom">NomClient :</label>
+    <input type="text" id="nom" name="nom" required>
+    <label for="prenom">PrénomClient :</label>
+    <input type="text" id="prenom" name="prenom" required>
+    <label for="adresse">Adresse :</label>
+    <input type="text" id="adresse" name="adresse" required>
+    <label for="ville">Ville :</label>
+    <input type="text" id="ville" name="ville" required>
+    <div class="input_wrap">
+    <label for="email">Email :</label>
+    <input type="email" id="email" name="email" required>
+    <label for="telephone">Téléphone :</label>
+    <input type="tel" id="telephone" name="telephone" required>
+    <label for="paiement">Méthode de Paiement :</label>
+    <select id="paiement" name="paiement" required>
+    <option value="carte">Carte de crédit</option>
+    <option value="paypal">PayPal</option>
+    <option value="virement">Virement bancaire</option>
+    </select>
+    
+    
+<button type="submit" id="confirmOrderBtn" >Confirmer la commande</button>
+<button id="confirmButton"> modifications</button>
+
+
+
+</form>
+</div>
+
+
+
+
+
+
+<script>
+    
+   
+    document.addEventListener('DOMContentLoaded', function() {
+    function updatePurchasedProductsTable() {
+        // Récupérer les produits achetés depuis le stockage local
+        var purchasedProducts = JSON.parse(localStorage.getItem('purchasedProducts')) || [];
+        
+        // Référence de la table
+        var purchasedTable = document.getElementById('commandTable');
+        var tbody = purchasedTable.querySelector('tbody');
+
+        // Vider la table avant de la mettre à jour
+        tbody.innerHTML = '';
+
+        // Parcourir tous les produits et les ajouter à la table
+        purchasedProducts.forEach(function(product) {
+            var row = createTableRow(product); // Passer l'objet de commande et le produit à la fonction de création de ligne
+            tbody.appendChild(row);
+        });
+    }
+
+    function createTableRow(product) {
+        var row = document.createElement('tr');
+        var productNameCell = document.createElement('td');
+        var productPriceCell = document.createElement('td');
+        var productQuantityCell = document.createElement('td');
+        var productImageCell = document.createElement('td');
+        var productImage = document.createElement('img');
+        var nomCell = document.createElement('td');
+        var totalPriceCell = document.createElement('td');
+
+        productNameCell.textContent = product.nomProduit;
+        productPriceCell.textContent = product.Prix;
+        productQuantityCell.textContent = product.quantity; // Suppose product a une propriété quantité
+        productImage.src = product.image; // Supposons que chaque produit a une URL d'image dans imageURL
+        productImage.style.width = '50px'; // Définir la largeur de l'image à 50 pixels
+        productImage.style.height = '50px'; // Définir la hauteur de l'image à 50 pixels
+        nomCell.textContent = product.nom;
+
+            totalPriceCell.textContent = (parseFloat(product.Prix) * parseFloat(product.quantity)).toFixed(2); // Calcul du prix total avec 2 décimales
+            
+
+           // tbody.appendChild(row);
+
+        row.appendChild(productNameCell);
+        row.appendChild(productPriceCell);
+        row.appendChild(productQuantityCell);
+        productImageCell.appendChild(productImage);
+        row.appendChild(productImageCell);
+        row.appendChild(nomCell)
+        row.appendChild(totalPriceCell);
+        
+
+
+        return row;
+    }
+
+    // Appeler la fonction pour mettre à jour la table des produits achetés
+    updatePurchasedProductsTable();
+
+    // Reste du code...
+    
+    // Gestionnaire d'événements pour le formulaire "orderForm"
+    document.getElementById('orderForm').addEventListener('submit', function(event) {
+        // Empêcher le formulaire de se soumettre
+        event.preventDefault();
+
+        // Récupérer les produits retirés déjà existants
+        var purchasedProducts = JSON.parse(localStorage.getItem('purchasedProducts')) || [];
+
+        // Récupérer les produits retirés depuis le stockage local
+        var orderedProducts = JSON.parse(localStorage.getItem('orderedProducts')) || [];
+
+        // Ajouter les produits commandés à la liste des produits achetés un par un
+        var nom = document.getElementById('nom').value; // Supposons que vous récupériez le nom du client depuis un champ de saisie
+        orderedProducts.forEach(function(product) {
+            product.nom = nom; // Ajouter le nom du client à chaque produit commandé
+            purchasedProducts.push(product);
+        });
+
+        // Supprimer les produits commandés du stockage local
+        localStorage.removeItem('orderedProducts');
+
+        // Mettre à jour la liste des produits achetés dans le stockage local
+        localStorage.setItem('purchasedProducts', JSON.stringify(purchasedProducts));
+
+        // Mettre à jour la table des produits achetés
+        updatePurchasedProductsTable();
+       // alert('Les produits suivants ont été achetés : ' + JSON.stringify(purchasedProducts));
+
+        // Rediriger vers la page de confirmation de commande ou une autre page après la confirmation de la commande
+        window.location.href = 'footer.html';
+    });
+});
+
+
+
+
+
+// FIN produit 
+
+
+//commande 
+
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Définition de la classe Commande
+    class Commande {
+        constructor(nom, prenom, adresse, ville, email, telephone, paiement) {
+            this.nom = nom;
+            this.prenom = prenom;
+            this.adresse = adresse;
+            this.ville = ville;
+            this.email = email;
+            this.telephone = telephone;
+            this.paiement = paiement;
+        }
+    }
+
+    // Gestionnaire d'événements pour le formulaire "orderForm"
+    document.getElementById('orderForm').addEventListener('submit', function(event) {
+        // Empêcher le formulaire de se soumettre
+        event.preventDefault();
+
+        // Récupérer les valeurs du formulaire
+        var nom = document.getElementById('nom').value;
+        var prenom = document.getElementById('prenom').value;
+        var adresse = document.getElementById('adresse').value;
+        var ville = document.getElementById('ville').value;
+        var email = document.getElementById('email').value;
+        var telephone = document.getElementById('telephone').value;
+        var paiement = document.getElementById('paiement').value;
+
+        // Créer un objet Commande représentant la commande
+        var order = new Commande(nom, prenom, adresse, ville, email, telephone, paiement);
+
+        // Ajouter la nouvelle commande à la liste des commandes dans le stockage local
+        var orders = JSON.parse(localStorage.getItem('orders')) || [];
+        orders.push(order);
+        localStorage.setItem('orders', JSON.stringify(orders));
+
+        // Mettre à jour la table des commandes
+        updatePurchasedProductsTable();
+
+        // Effacer le formulaire après soumission
+        document.getElementById('orderForm').reset();
+    });
+
+    // Fonction pour mettre à jour la table des commandes
+    function updatePurchasedProductsTable() {
+        // Récupérer les commandes depuis le stockage local
+        var orders = JSON.parse(localStorage.getItem('orders')) || [];
+
+        // Référence de la table
+        var ordersTable = document.getElementById('Table');
+        var tbody = ordersTable.querySelector('tbody');
+
+        // Vider la table avant de la mettre à jour
+        tbody.innerHTML = '';
+
+        // Parcourir toutes les commandes et les ajouter à la table
+        orders.forEach(function(order,index) {
+            var row = createTableRow(order,index);
+            tbody.appendChild(row);
+        });
+    }
+
+
+
+
+    function createTableRow(order,index) {
+        var row = document.createElement('tr');
+        var nomCell = document.createElement('td');
+        var prenomCell = document.createElement('td');
+        var adresseCell = document.createElement('td');
+        var villeCell = document.createElement('td');
+        var emailCell = document.createElement('td');
+        var telephoneCell = document.createElement('td');
+        var paiementCell = document.createElement('td');
+
+        var deleteButtonCell = document.createElement('td');
+        var modifyButtonCell = document.createElement('td');
+        var selectCell = document.createElement('td');
+
+        nomCell.textContent = order.nom;
+        prenomCell.textContent = order.prenom;
+        adresseCell.textContent = order.adresse;
+        villeCell.textContent = order.ville;
+        emailCell.textContent = order.email;
+        telephoneCell.textContent = order.telephone;
+        paiementCell.textContent = order.paiement;
+
+        // checkbox 
+
+        /*
+var checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.name = 'selectOrder';
+        checkbox.value = index;
+        checkbox.addEventListener('change', function() {
+            toggleFormFields(this.checked);
+        });
+        selectCell.appendChild(checkbox);
+
+        */
+
+        
+
+
+        // modifier surpprimer
+        var deleteButton = document.createElement('button');
+        deleteButton.textContent = 'Supprimer';
+        deleteButton.addEventListener('click', function() {
+            deleteOrder(index);
+        });
+        deleteButtonCell.appendChild(deleteButton);
+
+       
+
+        //fin
+
+        // modifier alternative 
+       
+
+
+
+        var selectButton = document.createElement('button');
+    selectButton.textContent = 'Sélectionner';
+    selectButton.addEventListener('click', function() {
+        selectOrderForModification(index);
+    });
+    modifyButtonCell.appendChild(selectButton);
+
+
+
+        row.appendChild(nomCell);
+        row.appendChild(prenomCell);
+        row.appendChild(adresseCell);
+        row.appendChild(villeCell);
+        row.appendChild(emailCell);
+        row.appendChild(telephoneCell);
+        row.appendChild(paiementCell);
+
+        row.appendChild(deleteButtonCell);
+        row.appendChild(modifyButtonCell);
+        //row.appendChild(selectCell);
+        
+      
+        return row;
+    }
+    updatePurchasedProductsTable()
+  
+   
+
+//   DEbut 
+
+
+
+    //FIN
+
+    // Fonction pour créer une ligne de tableau à partir d'une commande
+
+   
+    // modifier 
+
+
+    // Fonction pour modifier une commande
+function modifyOrder(order, index) {
+    // Pré-remplir le formulaire avec les détails de la commande à modifier
+    document.getElementById('nom').value = order.nom;
+    document.getElementById('prenom').value = order.prenom;
+    document.getElementById('adresse').value = order.adresse;
+    document.getElementById('ville').value = order.ville;
+    document.getElementById('email').value = order.email;
+    document.getElementById('telephone').value = order.telephone;
+    document.getElementById('paiement').value = order.paiement;
+
+    // Ajouter un gestionnaire d'événements au bouton de confirmation
+    var confirmButton = document.getElementById('confirmButton');
+    confirmButton.addEventListener('click', function(event) {
+        event.preventDefault();
+
+        // Afficher une boîte de dialogue de confirmation
+        var confirmation = confirm("Voulez-vous vraiment modifier cette commande ?");
+
+        // Vérifier si l'utilisateur a confirmé la modification
+        if (confirmation) {
+            // Récupérer les nouvelles valeurs saisies par l'utilisateur
+            var newNom = document.getElementById('nom').value;
+            var newPrenom = document.getElementById('prenom').value;
+            var newAdresse = document.getElementById('adresse').value;
+            var newVille = document.getElementById('ville').value;
+            var newEmail = document.getElementById('email').value;
+            var newTelephone = document.getElementById('telephone').value;
+            var newPaiement = document.getElementById('paiement').value;
+
+            // Mettre à jour la commande dans le stockage local
+            var orders = JSON.parse(localStorage.getItem('orders')) || [];
+            orders[index].nom = newNom;
+            orders[index].prenom = newPrenom;
+            orders[index].adresse = newAdresse;
+            orders[index].ville = newVille;
+            orders[index].email = newEmail;
+            orders[index].telephone = newTelephone;
+            orders[index].paiement = newPaiement;
+
+            // Mettre à jour les noms de clients associés à chaque produit
+            var purchasedProducts = JSON.parse(localStorage.getItem('purchasedProducts')) || [];
+            purchasedProducts.forEach(function(product) {
+                if (product.commandeId === orders[index].id) {
+                    product.nom = newNom;
+                }
+            });
+
+            // Mettre à jour le stockage local avec la commande modifiée
+            localStorage.setItem('orders', JSON.stringify(orders));
+
+            // Mettre à jour le stockage local avec les produits modifiés
+            localStorage.setItem('purchasedProducts', JSON.stringify(purchasedProducts));
+
+            // Mettre à jour la table des commandes
+            updatePurchasedProductsTable();
+            location.reload();
+        }
+    });
+}
+
+
+    
+// Fonction pour mettre à jour la table des produits achetés
+
+
+    // Mettre à jour également la table des produits achetés
+  
+
+
+
+
+
+function selectOrderForModification(index) {
+    var orders = JSON.parse(localStorage.getItem('orders')) || [];
+    var order = orders[index];
+    modifyOrder(order, index);
+}
+
+   
+    
+    
+
+  
+
+// Fin modifier 
+
+    
+});
+
+
+
+/*
+// recherche oui 
+// Fonction pour filtrer les données en fonction de la recherche
+document.addEventListener('DOMContentLoaded', function() {
+    // Constants for pagination
+    const ITEMS_PER_PAGE = 1; // Number of items per page
+    let currentPage = 1; // Current page, starting from 1
+
+    // Function to update the purchased products table based on the current page
+    function updatePurchasedProductsTable(searchTerm = '') {
+        // Retrieve orders from local storage
+        const orders = JSON.parse(localStorage.getItem('orders')) || [];
+
+        // Filter orders based on search term
+        const filteredOrders = orders.filter(order => order.nom.toLowerCase().includes(searchTerm.toLowerCase()));
+
+        // Pagination
+        const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+        const endIndex = startIndex + ITEMS_PER_PAGE;
+        const paginatedOrders = filteredOrders.slice(startIndex, endIndex);
+
+        // Reference to the table body
+        const tbody = document.querySelector('#Table tbody');
+
+        // Clear table before updating
+        tbody.innerHTML = '';
+
+        // Loop through paginated orders and add them to the table
+        paginatedOrders.forEach(function(order) {
+            const row = createTableRow(order);
+            tbody.appendChild(row);
+        });
+
+        // Update pagination buttons
+        updatePaginationButtons(filteredOrders.length);
+    }
+    //  fonction  
+
+
+
+
+    // Function to create a table row from an order object
+    function createTableRow(order,index) {
+        var row = document.createElement('tr');
+        var nomCell = document.createElement('td');
+        var prenomCell = document.createElement('td');
+        var adresseCell = document.createElement('td');
+        var villeCell = document.createElement('td');
+        var emailCell = document.createElement('td');
+        var telephoneCell = document.createElement('td');
+        var paiementCell = document.createElement('td');
+        var deleteButtonCell = document.createElement('td');
+        var  modifyButtonCell = document.createElement('td');
+
+        nomCell.textContent = order.nom;
+        prenomCell.textContent = order.prenom;
+        adresseCell.textContent = order.adresse;
+        villeCell.textContent = order.ville;
+        emailCell.textContent = order.email;
+        telephoneCell.textContent = order.telephone;
+        paiementCell.textContent = order.paiement;
+
+          // modifier surpprimer
+          var deleteButton = document.createElement('button');
+        deleteButton.textContent = 'Supprimer';
+        deleteButton.addEventListener('click', function() {
+            var index = Array.from(deleteButtonCell.parentNode.parentNode.children).indexOf(deleteButtonCell.parentNode);
+            deleteOrder(index);
+        });
+        deleteButtonCell.appendChild(deleteButton);
+
+
+         var selectButton = document.createElement('button');
+    selectButton.textContent = 'Sélectionner';
+    selectButton.addEventListener('click', function() {
+        selectOrderForModification(index);
+
+      
+    });
+    modifyButtonCell.appendChild(selectButton);
+    // modifier 
+    function selectOrderForModification(index) {
+    var orders = JSON.parse(localStorage.getItem('orders')) || [];
+    var order = orders[index];
+    modifyOrder(order,index);
+}
+// modifier index 
+
+
+
+
+
+    
+
+
+    function deleteOrder(index) {
+    const orders = JSON.parse(localStorage.getItem('orders')) || [];
+    
+    // Remove the order at the specified index
+    orders.splice(index, 1);
+
+    // Update local storage
+    localStorage.setItem('orders', JSON.stringify(orders));
+
+    // Update the displayed table
+    updatePurchasedProductsTable();
+}
+
+
+
+  
+
+        row.appendChild(nomCell);
+        row.appendChild(prenomCell);
+        row.appendChild(adresseCell);
+        row.appendChild(villeCell);
+        row.appendChild(emailCell);
+        row.appendChild(telephoneCell);
+        row.appendChild(paiementCell);
+        row.appendChild(deleteButtonCell);
+        row.appendChild(modifyButtonCell);
+
+
+        return row;
+    }
+   
+    updatePurchasedProductsTable()
+
+// 
+
+    // Function to update the pagination buttons
+    function updatePaginationButtons(totalItems) {
+        const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
+        const paginationContainer = document.getElementById('pagination');
+
+        // Clear pagination before updating
+        paginationContainer.innerHTML = '';
+
+        // Create and add pagination buttons
+        for (let i = 1; i <= totalPages; i++) {
+            const button = document.createElement('button');
+            button.textContent = i;
+            button.addEventListener('click', function() {
+                currentPage = i;
+                updatePurchasedProductsTable();
+            });
+            paginationContainer.appendChild(button);
+        }
+    }
+
+  
+    // Event listener for the search button
+    document.getElementById('searchButton').addEventListener('click', function() {
+        const searchTerm = document.getElementById('myInput').value;
+        updatePurchasedProductsTable(searchTerm);
+    });
+
+    // Initial call to display all orders
+    updatePurchasedProductsTable();
+});*/
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Constants for pagination
+    const ITEMS_PER_PAGE = 1; // Number of items per page
+    let currentPage = 1; // Current page, starting from 1
+
+    // Function to update the purchased products table based on the current page
+    function updatePurchasedProductsTable(searchTerm = '') {
+        // Retrieve orders from local storage
+        const orders = JSON.parse(localStorage.getItem('orders')) || [];
+    
+        // Filter orders based on search term
+        const filteredOrders = orders.filter(order => order.nom.toLowerCase().includes(searchTerm.toLowerCase()));
+
+        // Pagination
+        const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+        const endIndex = startIndex + ITEMS_PER_PAGE;
+        const paginatedOrders = filteredOrders.slice(startIndex, endIndex);
+
+        // Reference to the table body
+        const tbody = document.querySelector('#Table tbody');
+
+        // Clear table before updating
+        tbody.innerHTML = '';
+
+        // Loop through paginated orders and add them to the table
+        paginatedOrders.forEach(function(order, index) {
+            const row = createTableRow(order, index);
+            tbody.appendChild(row);
+        });
+
+     
+
+        // Update pagination buttons
+        updatePaginationButtons(filteredOrders.length);
+    }
+
+    // Function to create a table row from an order object
+    function createTableRow(order,index) {
+        var row = document.createElement('tr');
+        var nomCell = document.createElement('td');
+        var prenomCell = document.createElement('td');
+        var adresseCell = document.createElement('td');
+        var villeCell = document.createElement('td');
+        var emailCell = document.createElement('td');
+        var telephoneCell = document.createElement('td');
+        var paiementCell = document.createElement('td');
+        var deleteButtonCell = document.createElement('td');
+        var modifyButtonCell = document.createElement('td');
+
+        nomCell.textContent = order.nom;
+        prenomCell.textContent = order.prenom;
+        adresseCell.textContent = order.adresse;
+        villeCell.textContent = order.ville;
+        emailCell.textContent = order.email;
+        telephoneCell.textContent = order.telephone;
+        paiementCell.textContent = order.paiement;
+
+        // Delete button
+        var deleteButton = document.createElement('button');
+        deleteButton.textContent = 'Supprimer';
+        deleteButton.addEventListener('click', function() {
+            deleteOrder(index);
+        });
+        deleteButtonCell.appendChild(deleteButton);
+        /*
+        function deleteOrder(index) {
+    const orders = JSON.parse(localStorage.getItem('orders')) || [];
+    
+    // Remove the order at the specified index
+    orders.splice(index, 1);
+
+    // Update local storage
+    localStorage.setItem('orders', JSON.stringify(orders));
+
+    // Update the displayed table
+    updatePurchasedProductsTable();
+}*/
+
+
+        // Modify button
+        var selectButton = document.createElement('button');
+        selectButton.textContent = 'Sélectionner';
+        selectButton.addEventListener('click', function() {
+            selectOrderForModification(index);
+        });
+        modifyButtonCell.appendChild(selectButton);
+
+        row.appendChild(nomCell);
+        row.appendChild(prenomCell);
+        row.appendChild(adresseCell);
+        row.appendChild(villeCell);
+        row.appendChild(emailCell);
+        row.appendChild(telephoneCell);
+        row.appendChild(paiementCell);
+        row.appendChild(deleteButtonCell);
+        row.appendChild(modifyButtonCell);
+
+        return row;
+    }
+
+    // Function to update the pagination buttons
+    function updatePaginationButtons(totalItems) {
+        const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
+        const paginationContainer = document.getElementById('pagination');
+
+        // Clear pagination before updating
+        paginationContainer.innerHTML = '';
+
+        // Create and add pagination buttons
+        for (let i = 1; i <= totalPages; i++) {
+            const li  = document.createElement('li');
+            const button = document.createElement('button');
+            button.textContent = i;
+            button.addEventListener('click', function() {
+                currentPage = i;
+                updatePurchasedProductsTable();
+            });
+           // paginationContainer.appendChild(button);
+            li.appendChild(button);
+            paginationContainer.appendChild(li);
+          
+        }
+        var previousLink = document.createElement("button");
+//previousLink.href = "#";
+previousLink.innerHTML = "&laquo;";
+paginationContainer.insertBefore(previousLink, paginationContainer.firstChild);
+
+
+// Ajout de l'élément 'a' avec le contenu '»' pour la pagination suivante
+var nextLink = document.createElement("button");
+//nextLink.href = "#";
+nextLink.innerHTML = "&raquo;";
+paginationContainer.appendChild(nextLink);
+    }
+
+    // Event listener for the search button
+   /* document.getElementById('searchButton').addEventListener('click', function() {
+        const searchTerm = document.getElementById('myInput').value;
+        updatePurchasedProductsTable(searchTerm);
+    });*/
+    document.getElementById('myInput').addEventListener('input', function() {
+        const searchTerm = this.value;
+        updatePurchasedProductsTable(searchTerm);
+    });
+
+    // Initial call to display all orders
+    updatePurchasedProductsTable();
+
+    // Function to select an order for modification
+    function selectOrderForModification(index) {
+        /*
+        var orders = JSON.parse(localStorage.getItem('orders')) || [];
+        var order = orders[index];
+        modifyOrder(order, index);*/
+        // Calculate the real index of the order in the complete orders array
+    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+    const realIndex = startIndex + index;
+    
+    // Retrieve the complete orders array
+    const orders = JSON.parse(localStorage.getItem('orders')) || [];
+    
+    // Get the order at the calculated index
+    const order = orders[realIndex];
+    
+    // Call modifyOrder with the real index
+    modifyOrder(order, realIndex);
+
+    }
+
+    function deleteOrder(index) {
+    const orders = JSON.parse(localStorage.getItem('orders')) || [];
+    
+    // Remove the order at the specified index
+    orders.splice(index, 1);
+
+    // Update local storage
+    localStorage.setItem('orders', JSON.stringify(orders));
+
+    // Update the displayed table
+    updatePurchasedProductsTable();
+}
+
+    // Function to modify an order
+    function modifyOrder(order,index) {
+        // Pre-fill the form with the details of the order to modify
+        document.getElementById('nom').value = order.nom;
+        document.getElementById('prenom').value = order.prenom;
+        document.getElementById('adresse').value = order.adresse;
+        document.getElementById('ville').value = order.ville;
+        document.getElementById('email').value = order.email;
+        document.getElementById('telephone').value = order.telephone;
+        document.getElementById('paiement').value = order.paiement;
+
+        // Remove existing event handlers from the confirmation button to avoid multiple bindings
+        var confirmButton = document.getElementById('confirmButton');
+        confirmButton.removeEventListener('click', confirmButtonClickHandler);
+
+        // Add event handler to the confirmation button
+        confirmButton.addEventListener('click', confirmButtonClickHandler);
+
+        // Define the event handler function for the confirmation button
+        function confirmButtonClickHandler(event) {
+            event.preventDefault();
+
+            // Display a confirmation dialog
+            var confirmation = confirm("Voulez-vous vraiment modifier cette commande ?");
+
+            // Check if the user confirmed the modification
+            if (confirmation) {
+                // Retrieve the new values entered by the user
+                var newNom = document.getElementById('nom').value;
+                var newPrenom = document.getElementById('prenom').value;
+                var newAdresse = document.getElementById('adresse').value;
+                var newVille = document.getElementById('ville').value;
+                var newEmail = document.getElementById('email').value;
+                var newTelephone = document.getElementById('telephone').value;
+                var newPaiement = document.getElementById('paiement').value;
+
+                // Update the order in local storage
+                var orders = JSON.parse(localStorage.getItem('orders')) || [];
+                orders[index].nom = newNom;
+                orders[index].prenom = newPrenom;
+                orders[index].adresse = newAdresse;
+                orders[index].ville = newVille;
+                orders[index].email = newEmail;
+                orders[index].telephone = newTelephone;
+                orders[index].paiement = newPaiement;
+
+                // Update customer names associated with each product
+                var purchasedProducts = JSON.parse(localStorage.getItem('purchasedProducts')) || [];
+                purchasedProducts.forEach(function(product) {
+                    if (product.commandeId === orders[index].id) {
+                        product.nom = newNom;
+                    }
+                });
+
+                // Update local storage with the modified order
+                localStorage.setItem('orders', JSON.stringify(orders));
+
+                // Update local storage with the modified products
+                localStorage.setItem('purchasedProducts', JSON.stringify(purchasedProducts));
+
+                // Update the orders table
+                updatePurchasedProductsTable();
+
+                // Reload the page
+                location.reload();
+            }
+        }
+    }
+});
+
+
+
+
+
+
+
+//pagination barre de recherche  table produit acheter 
+
+document.addEventListener('DOMContentLoaded', function() {
+    var pageSize = 1; // Nombre d'éléments par page
+    var currentPage = 1; // Page actuelle, commence à 1
+    var searchTerm = ''; // Terme de recherche actuel
+
+    // Fonction pour mettre à jour le tableau des produits achetés avec pagination
+    function updatePurchasedProductsTable() {
+        var purchasedProducts = JSON.parse(localStorage.getItem('purchasedProducts')) || [];
+        var filteredProducts = purchasedProducts.filter(function(product) {
+            return product.nomProduit.toLowerCase().includes(searchTerm) ||
+                   product.nom.toLowerCase().includes(searchTerm) ||
+                   product.Prix.includes(searchTerm) ||
+                   product.quantity.includes(searchTerm);
+        });
+        var startIndex = (currentPage - 1) * pageSize;
+        var endIndex = startIndex + pageSize;
+        var paginatedProducts = filteredProducts.slice(startIndex, endIndex);
+        var tbody = document.querySelector('#commandTable tbody');
+        tbody.innerHTML = '';
+
+        paginatedProducts.forEach(function(product) {
+            var row = createTableRow(product);
+            tbody.appendChild(row);
+        });
+
+        renderPagination(filteredProducts.length);
+    }
+
+    // Fonction pour créer une ligne de tableau à partir d'un produit
+    function createTableRow(product) {
+        var row = document.createElement('tr');
+        var productNameCell = document.createElement('td');
+        var productPriceCell = document.createElement('td');
+        var productQuantityCell = document.createElement('td');
+        var productImageCell = document.createElement('td');
+        var productImage = document.createElement('img');
+        var nomCell = document.createElement('td');
+        var totalPriceCell = document.createElement('td');
+
+        productNameCell.textContent = product.nomProduit;
+        productPriceCell.textContent = product.Prix;
+        productQuantityCell.textContent = product.quantity;
+        productImage.src = product.image;
+        productImage.style.width = '50px';
+        productImage.style.height = '50px';
+        nomCell.textContent = product.nom;
+        totalPriceCell.textContent = (parseFloat(product.Prix) * parseFloat(product.quantity)).toFixed(2);
+
+        // suprrimer
+
+        //test
+
+        row.appendChild(productNameCell);
+        row.appendChild(productPriceCell);
+        row.appendChild(productQuantityCell);
+        productImageCell.appendChild(productImage);
+        row.appendChild(productImageCell);
+        row.appendChild(nomCell);
+        row.appendChild(totalPriceCell);
+
+        return row;
+    }
+
+    // Fonction pour rendre la pagination
+    function renderPagination(totalProducts) {
+        var totalPages = Math.ceil(totalProducts / pageSize);
+        var paginationElement = document.getElementById('pagination1');
+        paginationElement.innerHTML = '';
+
+        for (var i = 1; i <= totalPages; i++) {
+            var pageLink = document.createElement('a');
+            pageLink.href = '#';
+            pageLink.textContent = i;
+
+            pageLink.addEventListener('click', function(event) {
+                event.preventDefault();
+                currentPage = parseInt(event.target.textContent);
+                updatePurchasedProductsTable();
+            });
+
+            paginationElement.appendChild(pageLink);
+        }
+        var previousLink = document.createElement("a");
+previousLink.href = "#";
+previousLink.innerHTML = "&laquo;";
+paginationElement.insertBefore(previousLink, paginationElement.firstChild);
+
+// Ajout de l'élément 'a' avec le contenu '»' pour la pagination suivante
+var nextLink = document.createElement("a");
+nextLink.href = "#";
+nextLink.innerHTML = "&raquo;";
+paginationElement.appendChild(nextLink);
+    }
+
+    // Gestionnaire d'événements pour la soumission du formulaire
+    document.getElementById('orderForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        var purchasedProducts = JSON.parse(localStorage.getItem('purchasedProducts')) || [];
+        var orderedProducts = JSON.parse(localStorage.getItem('orderedProducts')) || [];
+        var nom = document.getElementById('nom').value;
+
+        orderedProducts.forEach(function(product) {
+            product.nom = nom;
+            purchasedProducts.push(product);
+        });
+
+        localStorage.removeItem('orderedProducts');
+        localStorage.setItem('purchasedProducts', JSON.stringify(purchasedProducts));
+
+        updatePurchasedProductsTable();
+
+        window.location.href = 'footer.html';
+    });
+
+    // Gestionnaire d'événements pour la recherche
+    document.getElementById('searchInput').addEventListener('input', function(event) {
+        searchTerm = event.target.value.toLowerCase();
+        currentPage = 1; // Réinitialiser la page actuelle à 1 lors de la recherche
+        updatePurchasedProductsTable();
+    });
+
+    // Appel initial pour mettre à jour le tableau des produits achetés
+    updatePurchasedProductsTable();
+});
+
+
+
+
+
+
+// annualier produit 
+
+// Ajoutez cette fonction pour supprimer le client et ses produits associés
+// Ajoutez cette fonction pour supprimer le client et ses produits associés
+
+
+
+
+</script>
+
+<footer class="footer">
+    <!-- Pied de page -->
+    <p>&copy; 2024 - Mon Site Web</p>
+</footer>
+</body>
+
+</html>

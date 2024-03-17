@@ -1,0 +1,113 @@
+<html>
+    <head>
+        <title>Gestion Produti</title>
+        <link rel="stylesheet" href="GestionProduit.css">
+        
+    <link rel="stylesheet" href="GestionProduit.css">
+    <link rel="stylesheet" href= "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    </head>
+    <body>
+
+        <div class="navbar" id="myNavbar"> 
+            <span class="site-name"><i class="fas fa-shopping-basket"></i>Gestion Panier</span>
+            <a href="acceuil.html"> 
+                <i class="fas fa-home icon"></i>Home 
+            </a> 
+            <a href="footer.html"> 
+                <i class="fas fa-briefcase icon"></i>Panier
+            </a> 
+            <a href="GestionProduit.html"> 
+                <i class="fas fa-boxes"></i>Produit 
+            </a> 
+            <a href="Test.html"> 
+                <i class="fas fa-shopping-cart"></i>Commande
+            </a> 
+    
+            <a href="login.html" id="logoutLink"> 
+                <i class="fas fa-sign-in-alt"></i>Deconnection
+            </a> 
+            
+            
+            <a href="javascript:void(0);" class="icon"
+                onclick="myFunc()"> 
+                <i class="fas fa-bars"></i> 
+            </a> 
+        </div> 
+       
+        <div class="container">
+            <form id="userForm">
+                        <label for="name">nomProduit</label>
+                        <input type="text" name="nomProduit" class="form-control" id="nomProduit"  placeholder="Enter Name" />
+
+                        <label for="email">Description</label>
+                        <input type="text" name="Description" class="form-control" id="Description" placeholder="Entrer Description" />
+                        <label for="age">Prix</label>
+                        <input type="number" name="Prix" class="form-control" id="Prix" placeholder="Entrer le prix" />
+                    
+                        <label for="address">Image</label>
+                        <input type="file" name="image"  id="image" placeholder="Entrer une image" />
+                        <button  id="submit" onclick="AddData()">
+                            Add Data
+                        </button>
+
+                        <button id="update" onclick="AddData()">
+                           Update
+                        </button>
+                        </form>
+                    </div>
+                    <div id="test">
+                        <div id="alertBox" style="display: none;">
+                            <!-- Placeholder for alert message -->
+                        </div>
+                        <div id="sup" style="display: none;">
+                            <!-- Placeholder for alert message -->
+                        </div>
+                    <input type="text" id="search" oninput="filterData()" placeholder="Rechercher...">
+
+                </div>
+                    <table  id="crudtable">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Age</th>
+                                <th>Address</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>     
+                        </tbody>
+                    </table>
+
+                    <div id="pagination">
+                        <a href="#">&laquo;</a>
+
+                        <a href="#">&raquo;</a>
+                    </div>
+              
+
+        <script src="GestionProduit.js"></script>
+        
+
+
+        <div class="content">
+            <!-- Contenu principal de la page -->
+            <p>Contenu principal de la page.</p>
+        </div>
+    
+        <footer class="footer">
+            <!-- Pied de page -->
+            <p>&copy; 2024 - Mon Site Web</p>
+        </footer>
+
+    </body>
+
+
+
+
+
+
+
+
+
+

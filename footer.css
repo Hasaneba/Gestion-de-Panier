@@ -1,0 +1,307 @@
+/* Style pour le contenu principal */
+.content {
+    padding: 20px; /* Ajouter un espacement intérieur */
+  }
+  
+  /* Style pour le pied de page */
+  .footer {
+    background-color: #4b8b01;   /*#333 Couleur de fond du pied de page */
+    color: white; /* Couleur du texte du pied de page */
+    padding: 20px; /* Ajouter un espacement intérieur */
+    text-align: center; /* Centrer le texte */
+    position: fixed; /* Fixer le pied de page en bas de la fenêtre */
+    left: 0; /* Aligner le pied de page à gauche */
+    bottom: 0; /* Aligner le pied de page en bas */
+    width: 100%; /* Occuper toute la largeur de la fenêtre */
+  }
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+  /* Style pour les boutons + et - */
+.incrementButton,
+.decrementButton {
+    background-color: #4CAF50; /* Couleur de fond */
+    border: none; /* Supprimer la bordure */
+    color: white; /* Couleur du texte */
+    padding: 8px 16px; /* Espacement interne */
+    text-align: center; /* Alignement du texte */
+    text-decoration: none; /* Supprimer la décoration du texte */
+    display: inline-block; /* Afficher en tant que bloc */
+    font-size: 14px; /* Taille de police */
+    margin: 4px 2px; /* Marge extérieure */
+    cursor: pointer; /* Curseur pointeur */
+    border-radius: 4px; /* Rayon de bordure */
+}
+
+/* Style spécifique pour le bouton + */
+.incrementButton {
+    background-color: #4CAF50; /* Couleur de fond */
+}
+
+/* Style spécifique pour le bouton - */
+.decrementButton {
+    background-color: #f44336; /* Couleur de fond */
+}
+
+
+
+
+button {
+  padding: 8px 12px;
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  border-radius:5px;
+}
+
+
+
+.quantity-input {
+  width: 50px; /* Largeur du champ d'entrée */
+  padding: 5px; /* Espacement intérieur */
+  border: 1px solid #ccc; /* Bordure */
+  border-radius: 5px; /* Coins arrondis */
+  font-size: 14px; /* Taille de la police */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#cartItems   {
+
+  border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    min-width: 400px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+
+
+#cartItems thead tr {
+  background-color: #4caf50;
+  color: #ffffff;
+  text-align: left;
+}
+
+
+
+#cartItems th,
+#cartItems td {
+    padding: 12px 15px;
+}
+
+
+
+#cartItems tbody tr {
+  border-bottom: 1px solid #dddddd;
+}
+
+#cartItems tbody tr:nth-of-type(even) {
+  background-color: #f3f3f3;
+}
+
+#cartItems tbody tr:last-of-type {
+  border-bottom: 2px solid #009879;
+}
+
+
+
+
+input[type="file"] {
+  width: 200px; /* Largeur */
+  padding: 10px; /* Rembourrage */
+  margin: 10px; /* Marge */
+  /* Autres styles */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+
+
+body { 
+  margin: 0; 
+  font-family: 'Arial', sans-serif; 
+} 
+
+.navbar { 
+  background-color: #4b8b01; 
+  overflow: hidden; 
+  padding: 12px;
+  justify-content: space-between;
+}
+.navbar a { 
+  float: left; 
+  display: block; 
+  color: #fff; 
+  text-align: center; 
+  padding: 14px 16px; 
+  text-decoration: none; 
+  font-size: 14px; 
+  margin-left:95px;
+} 
+
+.navbar a:hover { 
+  background-color: #2a93d5; 
+} 
+
+.navbar a .icon { 
+  margin-right: 8px; 
+} 
+
+.navbar a.icon { 
+  float: right; 
+  display: none; 
+} 
+
+.navbar.responsive a.icon { 
+  position: absolute; 
+  right: 0; 
+  top: 0; 
+} 
+
+.navbar.responsive a { 
+  float: none; 
+  display: block; 
+  text-align: left; 
+} 
+
+@media screen and (max-width: 800px) { 
+  .navbar a:not(:first-child) {display: none;} 
+  .navbar a.icon { 
+    float: right; 
+    display: block; 
+  } 
+} 
+.footer {
+position: fixed;
+bottom: 0;
+width: 100%;
+background-color: #4b8b01;
+color: white;
+padding: 10px 0;
+text-align: center;
+}
+.content {
+margin-top: 50px; /* Ajoutez une marge en haut pour compenser la hauteur de la barre de navigation fixe */
+padding: 20px;
+}
+.navbar p1{
+color:red;
+text-transform: capitalize;
+}
+.site-name {
+float: left;
+color: #fff;
+font-size: 20px;
+padding: 12px 14px;
+text-transform: uppercase;
+}
+
+
+
+#totalPriceElement{
+  margin-bottom:-120px;
+}
+
+
+
+
+
+
+#pagination {
+  /* Styles généraux   background-color: #f0f0f0; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  /* Styles spécifiques */
+  border-radius: 5px;
+  margin-top: 20px;
+  margin-left:-640px;
+}
+
+
+#pagination a {
+  /* Styles des liens à l'intérieur du div de pagination */
+  text-decoration: none;
+ color: #333;
+  padding: 5px 10px;
+  margin: 0 5px;
+  border-radius: 3px;
+  background-color: #ddd;
+}
+
+#pagination a:hover {
+  /* Styles au survol des liens */
+  background-color: #ccc;
+}
+
+li{
+  list-style: none;
+  margin:7px;
+}
+
+#clearCart{
+  margin-left:50px;
+  margin-top: 50px;
+}
+
+#cartItems{
+  margin-left:220px ;
+}
+
+#validateOrderBtn{
+  margin-bottom: -50px;
+  margin-left:220px;
+}
+
+#searchInput{
+  margin-left: 720px;
+  margin-bottom:25px;
+  padding:9px;
+}
+
+
+.footer{
+  position: fixed;
+  bottom: 0;
+  left:0;
+  width: 100%;
+  background-color: #4b8b01;
+  color: white;
+  padding: 10px 0;
+  text-align: center;
+  }

@@ -1,0 +1,186 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+	<meta charset="UTF-8"> 
+	<meta name="viewport" content= 
+		"width=device-width, initial-scale=1.0"> 
+
+	<title>Responsive Navbar with Icons</title> 
+
+	<link rel="stylesheet" href= "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"> 
+
+	<style> 
+		body { 
+			margin: 0; 
+			font-family: 'Arial', sans-serif; 
+		} 
+
+		.navbar { 
+			background-color: #4b8b01; 
+			overflow: hidden; 
+			padding: 12px;
+			justify-content: space-between;
+		} 
+		.navbar a { 
+			float: left; 
+			display: block; 
+			color: #fff; 
+			text-align: center; 
+			padding: 14px 16px; 
+			text-decoration: none; 
+			font-size: 15px; 
+			margin-left:95px;
+		} 
+
+		.navbar a:hover { 
+			background-color: #2a93d5; 
+		} 
+
+		.navbar a .icon { 
+			margin-right: 8px; 
+		} 
+
+		.navbar a.icon { 
+			float: right; 
+			display: none; 
+		} 
+
+		.navbar.responsive a.icon { 
+			position: absolute; 
+			right: 0; 
+			top: 0; 
+		} 
+
+		.navbar.responsive a { 
+			float: none; 
+			display: block; 
+			text-align: left; 
+		} 
+
+		@media screen and (max-width: 800px) { 
+			.navbar a:not(:first-child) {display: none;} 
+			.navbar a.icon { 
+				float: right; 
+				display: block; 
+			} 
+		} 
+		.footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #4b8b01;
+    color: white;
+    padding: 10px 0;
+    text-align: center;
+}
+.content {
+    margin-top: 50px; /* Ajoutez une marge en haut pour compenser la hauteur de la barre de navigation fixe */
+    padding: 20px;
+}
+.navbar p1{
+	color:red;
+	text-transform: capitalize;
+}
+.site-name {
+    float: left;
+    color: #fff;
+    font-size: 20px;
+    padding: 12px 14px;
+	text-transform: uppercase;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	</style> 
+</head> 
+
+<body> 
+	<div class="navbar" id="myNavbar"> 
+		<span class="site-name"><i class="fas fa-shopping-basket"></i>Gestion Panier</span>
+		<a href="acceuil.html"> 
+			<i class="fas fa-home icon"></i>Home 
+		</a> 
+		<a href="footer.html"> 
+			<i class="fas fa-briefcase icon"></i>Panier
+		</a> 
+		<a href="GestionProduit.html"> 
+			<i class="fas fa-boxes"></i>Produit 
+		</a> 
+		<a href="Test.html"> 
+			<i class="fas fa-shopping-cart"></i>Commande
+		</a> 
+
+		<a href="login.html" id="logoutLink"> 
+			<i class="fas fa-sign-in-alt"></i>Deconnection
+		</a> 
+		
+		
+		<a href="javascript:void(0);" class="icon"
+			onclick="myFunc()"> 
+			<i class="fas fa-bars"></i> 
+		</a> 
+	</div> 
+
+	<script> 
+		function myFunc() { 
+			var x = document.getElementById("myNavbar"); 
+			if (x.className === "navbar") { 
+				x.className += " responsive"; 
+			} else { 
+				x.className = "navbar"; 
+			} 
+		} 
+	</script> 
+
+<div class="content">
+	<!-- Contenu principal de la page -->
+	
+</div>
+
+<footer class="footer">
+	<!-- Pied de page -->
+	<p>&copy; 2024 - Mon Site Web</p>
+</footer>
+</body> 
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

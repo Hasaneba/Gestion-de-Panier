@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Panier</title>
+    <link rel="stylesheet" href="GestionPanier.css">
+</head>
+<body>
+
+    <header class="navbar">
+        <!-- Barre de navigation -->
+        <nav>
+            <ul>
+                <li><a href="acceuil.html">Accueil</a></li>
+                <li><a href="GestionProduit.html">GestionProduit</a></li>
+                <li><a href="GestionPanier.html">Panier</a></li>
+                <li><a href="GestionPanie">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    <input type="text" id="searchInput" placeholder="Rechercher dans le panier...">
+    <h1>Panier</h1>
+    <table id="cartItems">
+        <thead>
+            <tr>
+                <th>NomProduit</th>
+                <th>email</th>
+                <th>image</th>
+                <th>Image</th>
+            </tr>
+        </thead>
+        <tbody>
+
+          
+            <!-- Les lignes du panier seront générées ici -->
+        </tbody>
+        <button id="clearCart">Vider le Panier</button>
+    </table>
+    
+
+    <input type="number" id="quantite" placeholder="Quantité">
+    <button onclick="saveQuantity()">Enregistrer</button> 
+
+    <div id="pagination"></div>
+<script>
+
+
+function showCart() {
+    var cartItems = JSON.parse(localStorage.getItem('panierList')) || [];
+    var tbody = document.querySelector('#cartItems tbody');
+    tbody.innerHTML = ''; // Effacer le contenu de la table
+
+    cartItems.forEach( function(item) {
+        if (item !== null) { // Vérifiez si l'élément n'est pas null   
+
+var row = document.createElement('tr');
+
+// Créez les cellules (<td>) pour chaque propriété
+var emailCell = document.createElement('td');
+if (item.hasOwnProperty('Description')) {
+    emailCell.textContent = item.Description;
+} else {
+    emailCell.textContent = "N/A"; // Remplacez par un texte par défaut si 'email' n'est pas défini
+}
+
+// Ajoutez la cellule d'email à la ligne
+row.appendChild(emailCell);
+document.getElementById('cartItems').appendChild(row);
+
+var nameCell = document.createElement('td');
+// Affichez la propriété 'name'
+if (item.hasOwnProperty('nomProduit')) {
+    nameCell.textContent = item.nomProduit;
+} else {
+    nameCell.textContent = "N/A"; // Remplacez par un texte par défaut si 'name' n'est pas défini
+}
+
+// Ajoutez la cellule de nom à la ligne
+row.appendChild(nameCell);
+document.getElementById('cartItems').appendChild(row);
+
+
+
+// Affichez la propriété 'age'
+var ageCell = document.createElement('td');
+if (item.hasOwnProperty('Prix')) {
+    ageCell.textContent = item.Prix;
+} else {
+    ageCell.textContent = "N/A"; // Remplacez par un texte par défaut si 'age' n'est pas défini
+}
+
+
+
+// Ajoutez la cellule d'âge à la ligne
+row.appendChild(ageCell);
+
+document.getElementById('cartItems').appendChild(row);
+
+
+
+
+
+
+// Ajoutez la cellule d'âge à la ligne
+row.appendChild(ageCell);
+
+// Affichez la propriété 'age'
+var ageCell = document.createElement('td');
+if (item.hasOwnProperty('quantity')) {
+    ageCell.textContent = item.quantity;
+} else {
+    ageCell.textContent = "N/A"; // Remplacez par un texte par défaut si 'age' n'est pas défini
+}
+
+// Ajoutez la cellule d'âge à la ligne
+row.appendChild(ageCell);
+
+document.getElementById('cartItems').appendChild(row);
+
+// test  
+
+// Si l'élément n'est pas null et qu'il a la propriété 'image'
+var priceCell = document.createElement('td');
+if (item.hasOwnProperty('image')) {
+                // Créer un élément image
+                var img = document.createElement('img');
+                // Définir l'attribut src avec l'URL de l'image
+                img.src = item.image;
+                // Définir d'autres attributs de l'image si nécessaire
+                img.alt = "Image du produit"; // Texte alternatif pour l'image
+                img.width = 60; // Largeur de l'image (ajustez selon vos besoins)
+                // Insérer l'image dans la cellule de prix
+               priceCell.appendChild(img);
+
+            } else {
+                priceCell.textContent = "N/A"; // Remplacez par un texte par défaut si 'image' n'est pas défini
+            }  
+            row.appendChild(nameCell);
+            row.appendChild(priceCell);
+            tbody.appendChild(row);
+            
+        }
+    });
+}
+// Appel initial pour afficher le panier
+showCart()
+
+// Gestion du clic sur le bouton de suppression du panier
+var clearCartButton = document.getElementById('clearCart');
+clearCartButton.addEventListener('click', function() {
+    // Supprimer le contenu du panier en vidant le stockage local
+    localStorage.removeItem('panierList');
+    // Mettre à jour l'affichage du panier
+    showCart();
+});
+
+
+
+
+//Ajouter le quantite 
+
+
+// Récupérer l'élément input
+
+
+
+
+
+
+
+
+        function saveQuantity() {
+    var cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+    var quantiteValue = document.getElementById('quantite').value;
+
+    // Créer un objet contenant le nom de l'article et la quantité
+    var newItem = {
+        quantity: quantiteValue
+    };
+
+    // Ajouter le nouvel élément au tableau
+    cartItems.push(newItem);
+
+    // Enregistrer le tableau mis à jour dans le localStorage
+    localStorage.setItem('cartItems', JSON.stringify(cartItems));
+
+    // Rafraîchir l'affichage des quantités
+    displayQuantities();
+}
+
+function displayQuantities() {
+    var tbody = document.querySelector('#cartItems tbody');
+    tbody.innerHTML = ''; // Effacer le contenu précédent de la liste
+
+    var cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+
+    // Parcourir le tableau et ajouter chaque élément à la liste
+    cartItems.forEach(function(item) {
+        var row = document.createElement('tr');
+        var quantityCell = document.createElement('td');
+        quantityCell.textContent = item.quantity;
+        row.appendChild(quantityCell);
+        tbody.appendChild(row);
+
+        var quantityCell = document.createElement('td');
+        quantityCell.textContent = item.prix;
+        row.appendChild(quantityCell);
+        tbody.appendChild(row);
+    });
+}
+
+// Appel à la fonction pour afficher les quantités au chargement de la page
+displayQuantities();
+
+
+
+
+
+
+// dernier 
+var itemsPerPage = 5; // Nombre d'articles par page
+var currentPage = 1; // Page actuelle
+
+function showCart(page) {
+    var cartItems = JSON.parse(localStorage.getItem('panierList')) || [];
+    var tbody = document.querySelector('#cartItems tbody');
+    tbody.innerHTML = ''; // Effacer le contenu de la table
+
+    // Calculer l'indice de début et de fin des articles à afficher sur la page actuelle
+    var startIndex = (page - 1) * itemsPerPage;
+    var endIndex = startIndex + itemsPerPage;
+
+    // Afficher uniquement les articles de la page actuelle
+    cartItems.slice(startIndex, endIndex).forEach(function(item) {
+        if (item !== null) {
+            var row = document.createElement('tr');
+
+            // Créer les cellules (<td>) pour chaque propriété
+            // ...
+
+            tbody.appendChild(row);
+        }
+    });
+
+    // Mettre à jour les boutons de pagination
+    updatePagination();
+}
+
+function updatePagination() {
+    var cartItems = JSON.parse(localStorage.getItem('panierList')) || [];
+    var totalPages = Math.ceil(cartItems.length / itemsPerPage);
+
+    // Afficher les boutons de pagination
+    var paginationContainer = document.querySelector('#pagination');
+    paginationContainer.innerHTML = ''; // Effacer le contenu précédent
+
+    for (var i = 1; i <= totalPages; i++) {
+        var pageButton = document.createElement('button');
+        pageButton.textContent = i;
+        pageButton.addEventListener('click', function() {
+            currentPage = parseInt(this.textContent);
+            showCart(currentPage);
+        });
+        paginationContainer.appendChild(pageButton);
+    }
+}
+
+// Appel initial pour afficher le panier sur la première page
+showCart(currentPage);
+
+
+
+function showCart(page, searchText) {
+    // ...
+
+    // Filtrer les articles en fonction du texte de recherche
+    cartItems = cartItems.filter(function(item) {
+        return item.Description.toLowerCase().includes(searchText.toLowerCase()) ||
+               item.nomProduit.toLowerCase().includes(searchText.toLowerCase()) ||
+               item.Prix.toString().includes(searchText.toLowerCase()) ||
+               item.quantity.toString().includes(searchText.toLowerCase());
+    });
+
+    // ...
+}
+
+
+
+// message 
+
+
+
+    </script>
+
+
+<div class="content">
+    <!-- Contenu principal de la page -->
+    <p>Contenu principal de la page.</p>
+</div>
+
+<footer class="footer">
+    <!-- Pied de page -->
+    <p>&copy; 2024 - Mon Site Web</p>
+</footer>
+</body>
+</html>

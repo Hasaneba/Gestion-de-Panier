@@ -1,0 +1,417 @@
+body{
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+  }
+  .container {
+    max-width: 800px;
+    margin: 50px auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 5px;
+  }
+  
+  input,select,textarea{
+    margin-bottom: 10px;
+    padding: 10px;
+  }
+ 
+  button {
+    padding: 8px 12px;
+    background-color: #4caf50;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+  }
+  #myinput{
+    width:97%;
+  }
+  
+  button.delete-btn {
+    background-color: #e74c3c;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+  }
+
+
+
+
+
+
+  .container {
+    max-width: 800px;
+    margin: 50px auto;
+
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 7px;
+  }
+  
+  input,select,file{
+    margin-bottom: 10px;
+    padding: 10px;
+  }
+ 
+  button {
+    padding: 8px 12px;
+    background-color: #4caf50;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+  }
+  #myinput{
+    width:97%;
+  }
+  
+  
+  button.delete-btn {
+    background-color: #e74c3c;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+  }
+  
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+/* Style pour la barre de navigation */
+
+
+/* Style pour le contenu principal */
+.content {
+    margin-top: 50px; /* Ajoutez une marge en haut pour compenser la hauteur de la barre de navigation fixe */
+    padding: 20px;
+}
+
+/* Style pour le pied de page */
+.footer {
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    background-color: #333;
+    color: white;
+    padding: 10px 0;
+    margin-top: 45px;
+    text-align: center;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#crudtable   {
+
+  border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    min-width: 800px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    margin-left:200px
+}
+
+
+
+#crudtable thead tr {
+  background-color: #009879;
+  color: #ffffff;
+  text-align: left;
+}
+
+
+
+#crudtable th,
+#crudtable td {
+    padding: 12px 15px;
+}
+
+
+
+#crudtable tbody tr {
+  border-bottom: 1px solid #dddddd;
+}
+
+#crudtable tbody tr:nth-of-type(even) {
+  background-color: #f3f3f3;
+}
+
+#crudtable tbody tr:last-of-type {
+  border-bottom: 2px solid #009879;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.container {
+  max-width: 800px;
+  margin: 50px auto;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 5px;
+}
+
+input,select,file{
+  margin-bottom: 10px;
+  padding: 10px;
+}
+
+button {
+  padding: 8px 12px;
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+
+#update{
+  padding: 8px 12px;
+  background-color:red;
+  color: #fff;
+  border: none;
+  margin-top:2px;
+  cursor: pointer;
+}
+
+
+
+
+
+
+
+
+
+
+input[type="file"] {
+  width: 100%; /* Largeur */
+  margin-bottom: 10px;
+  padding: 10px;
+  /* Autres styles */
+  border: 1px solid #ccc;
+  border-radius: 7px;
+  font-size: 16px;
+}
+
+
+
+
+
+body { 
+  margin: 0; 
+  font-family: 'Arial', sans-serif; 
+} 
+
+.navbar { 
+  background-color: #4b8b01; 
+  overflow: hidden; 
+  padding: 12px;
+  justify-content: space-between;
+} 
+.navbar a { 
+  float: left; 
+  display: block; 
+  color: #fff; 
+  text-align: center; 
+  padding: 14px 16px; 
+  text-decoration: none; 
+  font-size: 14px; 
+  margin-left:95px;
+} 
+
+.navbar a:hover { 
+  background-color: #2a93d5; 
+} 
+
+.navbar a .icon { 
+  margin-right: 8px; 
+} 
+
+.navbar a.icon { 
+  float: right; 
+  display: none; 
+} 
+
+.navbar.responsive a.icon { 
+  position: absolute; 
+  right: 0; 
+  top: 0; 
+} 
+
+.navbar.responsive a { 
+  float: none; 
+  display: block; 
+  text-align: left; 
+} 
+
+@media screen and (max-width: 800px) { 
+  .navbar a:not(:first-child) {display: none;} 
+  .navbar a.icon { 
+    float: right; 
+    display: block; 
+  } 
+} 
+.footer{
+position: fixed;
+bottom: 0;
+width: 100%;
+background-color: #4b8b01;
+color: white;
+padding: 10px 0;
+text-align: center;
+}
+.content {
+margin-top: 50px; /* Ajoutez une marge en haut pour compenser la hauteur de la barre de navigation fixe */
+padding: 20px;
+}
+.navbar p1{
+color:red;
+text-transform: capitalize;
+}
+.site-name {
+float: left;
+color: #fff;
+font-size: 20px;
+padding: 12px 14px;
+text-transform: uppercase;
+}
+
+
+#test{
+  margin-left:200px;
+  margin-bottom:-20px;
+}
+
+
+
+#pagination {
+  /* Styles généraux   background-color: #f0f0f0; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 3px;
+  /* Styles spécifiques */
+  border-radius: 5px;
+  margin-top: 20px;
+  margin-left:-640px;
+}
+
+
+#pagination a {
+  /* Styles des liens à l'intérieur du div de pagination */
+  text-decoration: none;
+ color: #333;
+  padding: 5px 10px;
+  margin: 0 5px;
+  border-radius: 3px;
+  background-color: #ddd;
+}
+
+#pagination a:hover {
+  /* Styles au survol des liens */
+  background-color: #ccc;
+}
+
+li{
+  list-style: none;
+  margin:7px;
+}
+
+
+
+#alertBox{
+  padding: 15px;
+  background-color: #f44336;
+  color: white;
+  border-radius: 4px;
+  margin-bottom: 15px;
+}
+
+
+#sup{
+  padding: 15px;
+  background-color: #f44336;
+  color: white;
+  border-radius: 4px;
+  margin-bottom: 15px;
+}

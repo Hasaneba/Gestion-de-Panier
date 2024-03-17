@@ -1,0 +1,370 @@
+#commande{
+  margin-bottom: -150px;
+  margin-left:29px;
+}
+#commandTable{
+      border-collapse: collapse;
+      margin: 25px 0;
+      font-size: 0.9em;
+      font-family: sans-serif;
+      min-width: 800px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+      margin-left:30px;    
+}  
+  
+  #commandTable thead tr {
+    background-color: #4caf50;
+    color: #ffffff;
+    text-align: left;
+  } 
+  
+  #commandTable th,
+  #commandTable td {
+      padding: 12px 15px;
+  }
+  
+  
+  
+  #commandTable tbody tr {
+    border-bottom: 1px solid #dddddd;
+  }
+  
+  #commandTable tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+  }
+  
+  #commandTable tbody tr:last-of-type {
+    border-bottom: 2px solid #009879;
+  }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  .container{
+    max-width: 550px;
+    margin: 10px auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 100px;
+  }
+  
+  #orderForm {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 5px;
+  }
+  
+  input,select,textarea,email{
+    margin-bottom: 10px;
+    padding: 10px;
+  }
+ 
+  button {
+    padding: 8px 12px;
+    background-color: #4caf50;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+  }
+  input[type="email"],input[type="tel"],select,#confirmOrderBtn,#confirmButton{
+    width:100%;
+  }
+  
+#confirmButton{
+    padding: 8px 12px;
+    background-color: red;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    margin-top:2;
+}
+
+
+  
+
+  #Table{
+      border-collapse: collapse;
+      font-size: 0.9em;
+      font-family: sans-serif;
+      min-width: 300px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+      margin-top: 150px; 
+      margin-left:30px;
+  }
+  
+  
+  
+  #Table thead tr {
+    background-color: #4caf50;
+    color: #ffffff;
+    text-align: left;
+  }
+  
+
+ 
+  
+  
+  
+  #Table th,
+  #Table td {
+    padding: 12px 15px;
+  }
+  
+  
+  
+  #Table tbody tr {
+    border-bottom: 1px solid #dddddd;
+  }
+  
+  #Table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+  }
+  
+  #Table tbody tr:last-of-type {
+    border-bottom: 2px solid #009879;
+  }
+  
+
+  .content {
+    margin-top: 50px; /* Ajoutez une marge en haut pour compenser la hauteur de la barre de navigation fixe */
+    padding: 20px;
+}
+
+/* Style pour le pied de page */
+
+
+
+
+body{
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  body { 
+    margin: 0; 
+    font-family: 'Arial', sans-serif; 
+  } 
+  
+  .navbar { 
+    background-color: #4b8b01; 
+    overflow: hidden; 
+    padding: 12px;
+    justify-content: space-between;
+  } 
+  .navbar a { 
+    float: left; 
+    display: block; 
+    color: #fff; 
+    text-align: center; 
+    padding: 14px 16px; 
+    text-decoration: none; 
+    font-size: 14px; 
+    margin-left:95px;
+  } 
+  
+  .navbar a:hover { 
+    background-color: #2a93d5; 
+  } 
+  
+  .navbar a .icon { 
+    margin-right: 8px; 
+  } 
+  
+  .navbar a.icon { 
+    float: right; 
+    display: none; 
+  } 
+  
+  .navbar.responsive a.icon { 
+    position: absolute; 
+    right: 0; 
+    top: 0; 
+  } 
+  
+  .navbar.responsive a { 
+    float: none; 
+    display: block; 
+    text-align: left; 
+  } 
+  
+  @media screen and (max-width: 800px) { 
+    .navbar a:not(:first-child) {display: none;} 
+    .navbar a.icon { 
+      float: right; 
+      display: block; 
+    } 
+  } 
+  .footer{
+    position: fixed;
+    bottom: 0;
+    left:0;
+    width: 100%;
+    background-color: #4b8b01;
+    color: white;
+    padding: 10px 0;
+    text-align: center;
+    }
+.content {
+  margin-top: 50px; /* Ajoutez une marge en haut pour compenser la hauteur de la barre de navigation fixe */
+  padding: 20px;
+  }
+  .navbar p1{
+  color:red;
+  text-transform: capitalize;
+  }
+  .site-name {
+  float: left;
+  color: #fff;
+  font-size: 20px;
+  padding: 12px 14px;
+  text-transform: uppercase;
+  }
+
+  
+
+
+  
+
+
+  #pagination{
+    /* Styles généraux   background-color: #f0f0f0; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1px;
+    /* Styles spécifiques */
+    border-radius: 5px;
+    margin-top: 20px;
+    margin-left:-900px;
+  }
+
+
+#pagination button {
+  /* Styles des liens à l'intérieur du div de pagination */
+  text-decoration: none;
+ color: #333;
+  padding: 5px 10px;
+  margin: 0 5px;
+  border-radius: 3px;
+  background-color: #ddd;
+}
+
+#pagination button:hover {
+  /* Styles au survol des liens */
+  background-color: #ccc;
+}
+ 
+  
+/*
+  #dt{
+    display:inline-block;
+    margin-left:30px;
+  }*/
+
+
+  li{
+    list-style: none;
+    margin:7px;
+  }
+
+  #Input{
+    margin-left:645px;
+    margin-bottom: -20px;
+  }
+
+
+  #prod{
+    margin-bottom: -30px;
+    margin-left:29px;
+  }
+
+
+  #myInput{
+    margin-left:812px;
+    margin-bottom:-50px;
+  }
+
+
+
+
+
+
+  #pagination1 {
+    /* Styles généraux   background-color: #f0f0f0; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 3px;
+    /* Styles spécifiques */
+    border-radius: 5px;
+    margin-top: 20px;
+    margin-left:-992px;
+  }
+  
+  
+  #pagination1 a {
+    /* Styles des liens à l'intérieur du div de pagination */
+    text-decoration: none;
+   color: #333;
+    padding: 5px 10px;
+    margin: 0 5px;
+    border-radius: 3px;
+    background-color: #ddd;
+  }
+  
+  #pagination1 a:hover {
+    /* Styles au survol des liens */
+    background-color: #ccc;
+  }
+
+
+  #searchInput{
+    margin-left:645px;
+    margin-bottom: -20px;
+  }

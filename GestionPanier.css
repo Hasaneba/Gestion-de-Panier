@@ -1,0 +1,158 @@
+body{
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+  }
+  .container {
+    max-width: 800px;
+    margin: 50px auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 5px;
+  }
+  
+  input,select,textarea{
+    margin-bottom: 10px;
+    padding: 10px;
+  }
+ 
+  button {
+    padding: 8px 12px;
+    background-color: #4caf50;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+  }
+  #myinput{
+    width:97%;
+  }
+  table {
+    width: 70%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  th {
+    background-color: #f2f2f2;
+  }
+  
+  td:last-child {
+    text-align: center;
+  }
+  
+  button.delete-btn {
+    background-color: #e74c3c;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  body, ul {
+    margin: 0;
+    padding: 0;
+}
+
+/* Styles for the navigation bar */
+.navbar {
+    background-color: #333;
+    overflow: hidden;
+    position: fixed;
+}
+
+.navbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar li {
+    float: left;
+}
+
+.navbar li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.navbar li a:hover {
+    background-color:black;
+}
+
+
+
+/* Style pour la barre de navigation */
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: #333;
+    color: white;
+    padding: 10px 0;
+    text-align: center;
+}
+
+/* Style pour le contenu principal */
+.content {
+    margin-top: 50px; /* Ajoutez une marge en haut pour compenser la hauteur de la barre de navigation fixe */
+    padding: 20px;
+}
+
+/* Style pour le pied de page */
+.footer {
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    background-color: #333;
+    color: white;
+    padding: 10px 0;
+    margin-top: 45px;
+    text-align: center;
+}
+
+
+.navbar {
+    position:relative; /* Fixer la barre de navigation en haut */
+    top: 0; /* Aligner la barre de navigation en haut de la page */
+    width: 100%; /* Occuper toute la largeur de la fenêtre */
+    background-color: #333; /* Couleur de fond de la barre de navigation */
+    color: white; /* Couleur du texte de la barre de navigation */
+    padding: 10px 0; /* Ajouter un espacement intérieur en haut et en bas */
+    text-align: center; /* Centrer le texte */
+}

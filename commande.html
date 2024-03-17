@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Confirmation de commande</title>
+</head>
+<body>
+
+    <table id="commandTable">
+        <thead>
+            <tr>
+                <th>Produit</th>
+                <th>Prix</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Les données des produits seront ajoutées ici -->
+        </tbody>
+    </table>
+
+
+
+    <form id="orderForm">
+        <div>
+        <label for="nom">NomClient :</label>
+        <input type="text" id="nom" name="nom" required>
+        </div>
+        <div>
+        <label for="prenom">PrénomClient :</label>
+        <input type="text" id="prenom" name="prenom" required>
+        </div>
+        <div>
+        <label for="adresse">Adresse :</label>
+        <input type="text" id="adresse" name="adresse" required>
+        </div>
+        <div>
+        <label for="ville">Ville :</label>
+        <input type="text" id="ville" name="ville" required>
+        </div>
+        <div>
+        <label for="email">Email :</label>
+        <input type="email" id="email" name="email" required>
+        </div>
+        <div>
+        <label for="telephone">Téléphone :</label>
+        <input type="tel" id="telephone" name="telephone" required>
+        </div>
+        <div>
+        <label for="paiement">Méthode de Paiement :</label>
+        <select id="paiement" name="paiement" required>
+        <option value="carte">Carte de crédit</option>
+        <option value="paypal">PayPal</option>
+        <option value="virement">Virement bancaire</option>
+        </select>
+        </div>
+        <button type="submit">Soumettre la Commande</button>
+        </form>
+
+<h2>Détails des Produits Achetés :</h2>
+<table id="productsTable">
+    <!-- Tableau pour afficher les détails des produits achetés -->
+</table>
+
+
+<h2>Produits Supprimés :</h2>
+<table id="deletedProductsTable">
+    
+    <!-- Tableau pour afficher les détails des produits supprimés -->
+</table>
+
+<h2>Toutes les commandes</h2>
+<div id="allOrders">
+    <!-- Les détails de toutes les commandes seront affichés ici -->
+</div>
+
+<script>
+document.getElementById('orderForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    // Récupérer les détails de la commande depuis le formulaire
+    var nom = document.getElementById('nom').value;
+    var prenom = document.getElementById('prenom').value;
+    var adresse = document.getElementById('adresse').value;
+    var ville = document.getElementById('ville').value;
+    var email = document.getElementById('email').value;
+    var telephone = document.getElementById('telephone').value;
+    var paiement = document.getElementById('paiement').value;
+
+    // Créer un objet contenant les détails de la commande
+    var commandeDetails = {
+        nom: nom,
+        prenom: prenom,
+        adresse: adresse,
+        ville: ville,
+        email: email,
+        telephone: telephone,
+        paiement: paiement
+    };
+
+    // Récupérer toutes les commandes existantes du localStorage
+    var orders = JSON.parse(localStorage.getItem('orders')) || [];
+    
+    // Ajouter la nouvelle commande aux commandes existantes
+    orders.push(commandeDetails);
+    
+    // Mettre à jour les commandes dans le localStorage
+    localStorage.setItem('orders', JSON.stringify(orders));
+
+    // Mettre à jour l'affichage de toutes les commandes
+    displayAllOrders();
+    
+    // Effacer les champs du formulaire après la soumission
+    document.getElementById('orderForm').reset();
+});
+//
+
+
+// Fonction pour afficher toutes les commandes
+function displayAllOrders() {
+    var allOrdersDiv = document.getElementById('allOrders');
+    allOrdersDiv.innerHTML = ''; // Effacer le contenu actuel
+
+    // Récupérer toutes les commandes depuis le localStorage
+    var orders = JSON.parse(localStorage.getItem('orders')) || [];
+
+    // Parcourir toutes les commandes et les afficher
+    orders.forEach(function(order, index) {
+        var orderDiv = document.createElement('div');
+        orderDiv.classList.add('order');
+
+        var orderHeader = document.createElement('h3');
+        orderHeader.textContent = 'Commande ' + (index + 1);
+        orderDiv.appendChild(orderHeader);
+
+        // Créer une liste pour afficher les détails de la commande
+        var orderList = document.createElement('ul');
+        for (var key in order) {
+            var listItem = document.createElement('li');
+            if (key === 'produitsSupprimes' && Array.isArray(order[key])) {
+                listItem.textContent = 'Produits supprimés:';
+                var deletedProductsList = document.createElement('ul');
+                order[key].forEach(function(product) {
+                    var deletedProductItem = document.createElement('li');
+                    deletedProductItem.textContent = 'Nom: ' + product.nom + ', Prix: ' + product.prix + ', Quantité: ' + product.quantite + ', Description: ' + product.description;
+                    // Ajouter l'image à l'élément de liste du produit supprimé
+                    deletedProductItem.appendChild(createImageElement(product));
+                    deletedProductsList.appendChild(deletedProductItem);
+                });
+                listItem.appendChild(deletedProductsList);
+            } else {
+                listItem.textContent = key.charAt(0).toUpperCase() + key.slice(1) + ': ' + order[key];
+            }
+            orderList.appendChild(listItem);
+        }
+        orderDiv.appendChild(orderList);
+
+        allOrdersDiv.appendChild(orderDiv);
+    });
+}
+
+// Afficher toutes les commandes au chargement de la page
+window.addEventListener('load', displayAllOrders);
+
+
+
+
+
+
+
+
+
+
+
+// TEST 
+
+    // Récupérer les produits sélectionnés depuis le stockage local
+   // Récupérer les produits sélectionnés depuis le stockage local
+var selectedProducts = JSON.parse(localStorage.getItem('selectedProducts')) || [];
+
+// Référence de la table de commande
+var orderTable = document.getElementById('commandTable');
+var orderTbody = orderTable.querySelector('tbody');
+
+// Parcourir les produits sélectionnés et les ajouter à la table de commande
+selectedProducts.forEach(function(product) {
+    var row = document.createElement('tr');
+    var productNameCell = document.createElement('td');
+    var productPriceCell = document.createElement('td');
+    var productQuantityCell = document.createElement('td');
+    var productImageCell = document.createElement('td');
+    var productImage = document.createElement('img');
+
+    productNameCell.textContent = product.nomProduit;
+    productPriceCell.textContent = product.Prxi;
+    productQuantityCell.textContent = product.quantity; // Suppose product a une propriété quantité
+    productImage.src = product.imageURL; // Supposons que chaque produit a une URL d'image dans imageURL
+    productImage.style.width = '50px'; // Définir la largeur de l'image à 50 pixels
+    productImage.style.height = '50px'; // Définir la hauteur de l'image à 50 pixels
+
+    row.appendChild(productNameCell);
+    row.appendChild(productPriceCell);
+    row.appendChild(productQuantityCell);
+    productImageCell.appendChild(productImage);
+    row.appendChild(productImageCell);
+
+    orderTbody.appendChild(row);
+});
+
+// Stocker les produits sélectionnés dans une variable pour les enregistrer dans le stockage local
+var removedProducts = selectedProducts;
+
+// Supprimer les produits du panier
+localStorage.removeItem('selectedProducts');
+
+// Stocker les produits retirés dans le stockage local
+localStorage.setItem('removedProducts', JSON.stringify(removedProducts));
+
+
+
+
+
+
+</script>
+</body>
+</html>
+
+
